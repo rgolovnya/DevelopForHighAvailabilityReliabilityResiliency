@@ -1,0 +1,128 @@
+(k36) u@r:~/uca$ ssh -i keypairuca2.pem ec2-user@18.133.228.226
+The authenticity of host '18.133.228.226 (18.133.228.226)' can't be established.
+ECDSA key fingerprint is SHA256:/LqphnBk74FbcODHjXlwlfwIpkPAfFLBBgP2BGyn4NU.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '18.133.228.226' (ECDSA) to the list of known hosts.
+
+       __|  __|_  )
+       _|  (     /   Amazon Linux 2 AMI
+      ___|\___|___|
+
+https://aws.amazon.com/amazon-linux-2/
+[ec2-user@ip-10-10-10-110 ~]$ mysql -u admin -p -h udacityreplica.ckri0g7cglrx.eu-west-2.rds.amazonaws.com
+-bash: mysql: command not found
+[ec2-user@ip-10-10-10-110 ~]$ sudo yum install mysql
+Loaded plugins: extras_suggestions, langpacks, priorities, update-motd
+amzn2-core                                               | 3.7 kB     00:00
+Resolving Dependencies
+--> Running transaction check
+---> Package mariadb.x86_64 1:5.5.68-1.amzn2 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+================================================================================
+ Package        Arch          Version                   Repository         Size
+================================================================================
+Installing:
+ mariadb        x86_64        1:5.5.68-1.amzn2          amzn2-core        8.8 M
+
+Transaction Summary
+================================================================================
+Install  1 Package
+
+Total download size: 8.8 M
+Installed size: 49 M
+Is this ok [y/d/N]: y
+Downloading packages:
+mariadb-5.5.68-1.amzn2.x86_64.rpm                          | 8.8 MB   00:00
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : 1:mariadb-5.5.68-1.amzn2.x86_64                              1/1
+  Verifying  : 1:mariadb-5.5.68-1.amzn2.x86_64                              1/1
+
+Installed:
+  mariadb.x86_64 1:5.5.68-1.amzn2
+
+Complete!
+[ec2-user@ip-10-10-10-110 ~]$ mysql -u admin -p -h udacityreplica.ckri0g7cglrx.eu-west-2.rds.amazonaws.com
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MySQL connection id is 28
+Server version: 8.0.20 Source distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MySQL [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| udacity            |
++--------------------+
+4 rows in set (0.00 sec)
+
+MySQL [(none)]> use udacity
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+MySQL [udacity]> show tables
+    -> ;
++-------------------+
+| Tables_in_udacity |
++-------------------+
+| courses           |
++-------------------+
+1 row in set (0.00 sec)
+
+MySQL [udacity]> select id, name from courses;
++------+----------------------------------------+
+| id   | name                                   |
++------+----------------------------------------+
+|   63 | AWS Cloud Architect Nanodegree program |
++------+----------------------------------------+
+1 row in set (0.00 sec)
+
+MySQL [udacity]> insert into courses values(9991, 'CloudDevOps Engineer'
+    -> );
+ERROR 1290 (HY000): The MySQL server is running with the --read-only option so it cannot execute this statement
+MySQL [udacity]> insert into courses values(9991, 'CloudDevOps Engineer' );
+ERROR 2006 (HY000): MySQL server has gone away
+No connection. Trying to reconnect...
+Connection id:    9
+Current database: udacity
+
+Query OK, 1 row affected (0.03 sec)
+
+MySQL [udacity]> show tables
+    -> ;
++-------------------+
+| Tables_in_udacity |
++-------------------+
+| courses           |
++-------------------+
+1 row in set (0.00 sec)
+
+MySQL [udacity]> insert into courses values(9991, 'CloudDevOps Engineer' );
+Query OK, 1 row affected (0.00 sec)
+
+MySQL [udacity]> select id, names from courses;
+ERROR 1054 (42S22): Unknown column 'names' in 'field list'
+MySQL [udacity]> select id, name from courses;
++------+----------------------------------------+
+| id   | name                                   |
++------+----------------------------------------+
+|   63 | AWS Cloud Architect Nanodegree program |
+| 9991 | CloudDevOps Engineer                   |
+| 9991 | CloudDevOps Engineer                   |
++------+----------------------------------------+
+3 rows in set (0.00 sec)
+
+MySQL [udacity]>
