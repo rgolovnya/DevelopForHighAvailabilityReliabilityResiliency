@@ -3,6 +3,7 @@
 Udacity Cloud Architect Nanodegree Project 1 Recoverability in AWS
 
 Project Overview
+
 In this project, I have created highly available solutions for common use cases.
 
 - Built a Multi-AvailabilityZone, Multi-Region database and showed how to use it in multiple geographically separate AWS regions.
